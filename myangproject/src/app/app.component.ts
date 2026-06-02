@@ -14,7 +14,7 @@ import {CommonModule} from '@angular/common';
 })
 export class AppComponent {
   title = 'myangproject';
-  srclink : string ='./assets/DLM_0932.jpg';
+  srclink : string ='./assets/24962557.jpg';
   inputValue: any = '2-way input';
  numberInput: any = 0;
 //getter method to calculate value based on numberInput
