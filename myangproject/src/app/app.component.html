@@ -1,6 +1,99 @@
 <h1>My Angular App app component</h1>
 <p>This is the app component of my Angular application.</p>
 <p>It serves as the root component for the application and can contain other components and content.</p>
-<p>Feel free to customize this component and add your own content as needed.</p>  
+<p>Feel free to customize this component and add your own content as needed.</p>
+<img src="https://angular.io/assets/images/logos/angular/angular.png" alt="Angular Logo" width="200">
+<p>using custom component selector to include TestComponent </p>
+<app-testme></app-testme> <!-- using custom component selector to include TestComponent -->
+<p>{{title}}</p> <!-- interpolation -->
+<img [src]="srclink" alt="Custom Image" width="200" class="picture" (click)="display('Welcome to Angular!')">
+<!-- property binding and event binding   -->
 
-<app-testme></app-testme>
+<div tabindex="0" (keydown)="displayEvent($event)"> <!-- event binding for keyboard events with event object  -->
+    click me to focus
+</div>
+<!-- Two-way data binding with ngModel -->
+<input type="text" [(ngModel)]="inputValue" placeholder="Enter some text" />
+<p>You entered: {{inputValue}}</p>
+
+<!-- Two-way data binding with ngModel and getter -->
+<p>input the number to calculate:</p>
+<input type="number" [(ngModel)]="numberInput" min="0" />
+<p>calculated value using getter: {{calculatedValue}}</p>
+
+<p>gettersetter practice using private property</p>
+<input type="number" [(ngModel)]="price" />
+<p>getter price : {{price}}</p>
+
+<!-- Using [hidden] directive for conditional rendering -->
+<!-- This div will be hidden from view but present in dom tree on inspection --so requires more memory consumption and processing needed for this element -->
+<div [hidden]="true">hiddebn</div>
+<!-- This div will be hidden from view as well as in DOM tree
+  based on true/false so no memory consumption and processing needed for this element --> -->
+
+<div *ngIf="true">if true</div>
+<div *ngIf="false">if false</div>
+
+
+<!-- USing *ngIf directive for conditional rendering -->
+<div *ngIf="employee.isActive; then activeBlock; else inactiveBlock">
+    Active Employee
+</div>
+
+
+<ng-template #activeBlock>
+    <h3>Welcome Employee</h3>
+</ng-template>
+
+<ng-template #inactiveBlock>
+    Employee is Inactive
+</ng-template>
+<!-- <div *ngIf="employee$ | async as emp; else loading">
+    {{emp.name}}
+</div> -->
+<div *ngIf="!isLoading; else loadingTemplate">
+    <div *ngIf="employee as emp">
+        <h2>{{emp.name}}</h2>
+        <div *ngIf="isAdmin; else employeeView">
+            <button>Edit Employee</button>
+            <button>Delete Employee</button>
+        </div>
+        <ng-template #employeeView>
+            <button>View Employee</button>
+        </ng-template>
+    </div>
+</div>
+<ng-template #loadingTemplate>
+    Loading Employee Data...
+</ng-template>
+<!-- using modern if else syntax in Angular -->
+@if(isLoading)
+{
+<p>Loading...</p>
+}
+<!-- @else if(employee; as emp) u cant use like this  
+     if creating an alias with 'as' use @if only . -->
+@else
+{
+@if(employee; as emp)
+{
+<h2>{{emp.name}}</h2>
+@if(isAdmin){
+
+<button>Edit</button>
+<button>Delete</button>
+
+}
+@else{
+
+<button>View</button>
+
+}
+}
+
+@else{
+
+<h2>No Employee Found</h2>
+
+}
+}
