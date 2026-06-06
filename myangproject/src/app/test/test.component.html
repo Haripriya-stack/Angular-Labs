@@ -1,1 +1,54 @@
 <p>test works!</p>
+<!--using normal css class-->
+<h1>using normal css class</h1>
+<div class="container">
+  <label for="age">Enter your age: </label>
+  <input type="text" id="age" (input)="checkEligibility()"
+   [(ngModel)]="age" />
+  <div class="message" [ngSwitch]="isEligible">
+    <p *ngSwitchCase="true" class="eligible">You are eligible to vote</p>
+    <p *ngSwitchDefault class="not-eligible">You are not eligible to vote!</p>
+  </div>
+</div>
+<!--using ngclass modern syntax-->
+<h1>using ngclass all varieties</h1>
+<div class="container">
+  <label [ngClass]="'label'" for="age">Enter your age: </label>
+  <input type="text" id="age" (input)="checkEligibility()"
+   [(ngModel)]="age" />
+  <div [class]="messageClass" 
+  [ngClass]="{
+    'eligible': isEligible, 
+    'not-eligible': !isEligible
+    }" 
+    [ngSwitch]="isEligible">
+    <p *ngSwitchCase="true" >You are eligible to vote</p>
+    <p *ngSwitchDefault >You are not eligible to vote!</p>
+  </div>
+  <p [ngClass]="[messageClass,'message2','message1']">ngclass array</p>
+<p
+ class="{{isEligible === true ? 'eligible' : 'not-eligible'}}">
+ using normal class condition
+</p>
+    <p [ngClass]="isEligible === true ? 'eligible': 'not-eligible'">ngclass condition</p>
+</div>
+
+<!--using ngstyle syntax-->
+<p style="color:red">
+ Employee
+</p>
+<p [ngStyle]="{color: employee.salary > 50000 ? 'green' : 'red',
+    backgroundColor: employee.salary > 50000 ? '#d4edda' : '#f8d7da',
+}">
+ Salary
+</p>
+<p [style.color]="'green'">
+    Employee
+</p>
+<p [style.width.px]="200" [style.height.px]="50">
+    Employee
+
+</p>
+<p [ngStyle]="{'width.px': '200', 'width.%': '50','height.px':'200', 'backgroundColor': 'lightblue'}">
+    Employee
+    </p>

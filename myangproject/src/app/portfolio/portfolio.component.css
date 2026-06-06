@@ -1,0 +1,160 @@
+* {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1 {
+  text-align: center;
+  font-size: 3rem;
+  color: #808080;
+  margin-top: -10px;
+}
+form {
+  /*form is a flex container with each div being a flex item*/
+  display: flex;
+  flex-direction: column;
+  border: 1px solid;
+  width: 80%;/* Set the width of the form to 80% of its container */
+  margin: 0 auto;/*t/b l/r auto means automatically splits up space equally to left and right Center the form horizontally */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  padding: 20px;/* Add padding to create space between the form content and the border */
+}
+form div {
+  /*each div considered as flex container with label and inoput as flex items*/
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem; /* Add some space below each div containing label, input 1 rem=16px */
+  /*Take available space equally with other flex items."
+  1. flex-grow:Determines how much an item can grow relative to the other items in the container. A value of 1 
+  <div class="container">
+    <div class="box1">A</div>
+    <div class="box2">B</div>
+</div>
+.container{
+    display:flex;
+    width:600px;
+}
+.box1{
+    flex-grow:1;
+}
+
+.box2{
+    flex-grow:2;
+}
+.box1{
+    flex-grow:1;
+}
+
+.box2{
+    flex-grow:2;
+}
+Space ratio:
+1 : 2
+If 600px available:
+A = 200px
+B = 400px
+   while a value of 0 means it will not grow.
+
+2. flex-shrink:Determines how much an item can shrink if space is tight.
+Example:
+.container{
+    display:flex;
+    width:200px;
+}
+Suppose contents need:150px + 150px = 300px
+But container is only:200px
+Need to remove:300 - 200 = 100px
+If:flex-shrink:1;
+for both items:Each shrinks equally.
+150px → 100px
+150px → 100px
+Final:
+100px (box1) + 100px (box2) = 200px
+while a value of 0 means it will not shrink
+
+3. flex-basis:Determines the initial size before growing or shrinking happens.
+Ignore content size and divide space equally.
+Example:
+container width: 500px
+.box{
+    flex-basis:100px;
+    flex-grow:1;
+}
+Each box starts at 100px.
+so 2 boxes= 200px total
+Remaining space: 500px - 200px = 300px
+Each box grows equally:(300px / 2)
+100px + (300px / 2) = 250px(each 250)
+
+When you write:flex:1;
+Flexbox treats every item as if it starts at:
+flex-basis:0;
+  */
+}
+form label {
+
+    font-weight: bold;
+    margin-bottom: 0.4rem;
+}
+
+
+ form input[type="text"],
+ form input[type="email"],
+ form input[type="tel"] {
+ padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ccc;
+  flex: 1;
+
+}
+.btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+
+}
+button {
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  background-color: #03284e;
+  color: #fff;
+  border: none;
+  margin-right: 1rem;
+  flex-basis:0;
+}
+button:hover {
+  background-color: yellow;
+}
+@media only screen and (min-width: 705px) {
+  form {
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+  form div {
+    flex: 1;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+  }
+  form div:last-child {
+    margin-right: 1rem;
+  }
+}
+  .preview-container {
+  position: relative;
+  top: 50%;
+  left: 50%;
+  bottom: -280px;
+  transform: translate(-50%, -50%);
+  border: 1px solid #808080;
+  width: 500px;
+  box-shadow: 0 0 10px #808080;
+  padding: 20px;
+}
+.btn-edit {
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+}
+
+

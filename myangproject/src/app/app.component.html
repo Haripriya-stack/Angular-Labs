@@ -4,7 +4,15 @@
 <p>Feel free to customize this component and add your own content as needed.</p>
 <img src="https://angular.io/assets/images/logos/angular/angular.png" alt="Angular Logo" width="200">
 <p>using custom component selector to include TestComponent </p>
-<app-testme></app-testme> <!-- using custom component selector to include TestComponent -->
+<!-- using custom component selector to include TestComponent
+ passing data directly 
+<app-testme [username]="'CharanNareshHAri'"></app-testme> 
+-->
+<!-- using custom component selector to include TestComponent
+ passing data via property -->
+ <input type="text" name="Parentname" [(ngModel)]="namefromParent">
+ <button (click)="UpdateName()" >clickme</button>
+<app-testme [username]="namefromParent"></app-testme>
 <p>{{title}}</p> <!-- interpolation -->
 <img [src]="srclink" alt="Custom Image" width="200" class="picture" (click)="display('Welcome to Angular!')">
 <!-- property binding and event binding   -->
@@ -13,16 +21,16 @@
     click me to focus
 </div>
 <!-- Two-way data binding with ngModel -->
-<input type="text" [(ngModel)]="inputValue" placeholder="Enter some text" />
+<input type="text"name="inputValue" [(ngModel)]="inputValue" placeholder="Enter some text" />
 <p>You entered: {{inputValue}}</p>
 
 <!-- Two-way data binding with ngModel and getter -->
 <p>input the number to calculate:</p>
-<input type="number" [(ngModel)]="numberInput" min="0" />
+<input type="number" name="numberInput" [(ngModel)]="numberInput" min="0" />
 <p>calculated value using getter: {{calculatedValue}}</p>
 
 <p>gettersetter practice using private property</p>
-<input type="number" [(ngModel)]="price" />
+<input type="number" name="price" [(ngModel)]="price" />
 <p>getter price : {{price}}</p>
 
 <!-- Using [hidden] directive for conditional rendering -->
@@ -97,3 +105,211 @@
 
 }
 }
+<!-- using old ngfor  syntax in Angular -->
+ <!--count -❌ Not available in *ngFor-->
+ <div *ngFor="let emp of employees;
+ let i =index;let e=even; odd as o
+ let f=first;let l=last;
+ trackBy:trackRowById">
+
+    <p>{{emp.name}}</p>
+    <p>{{emp.department}}</p>
+    <p>{{emp.id}}</p>
+      <p>index: {{i}}</p>
+    <p>Even: {{e}}</p>
+    <p>Odd: {{o}} </p>
+      <p>last: {{l}}</p>
+    <p>first : {{f}} </p>
+
+ </div>
+<!--here we need to use ngif to check if employees array has data or not before using ngfor to avoid error of undefined array and also to show message when no data is present in array-->
+<div *ngIf="employees.length > 0; else noData">
+
+  <div *ngFor="let emp of employees">
+      {{ emp.name }}
+  </div>
+
+</div>
+
+<ng-template #noData>
+  <p>No Employees Found</p>
+</ng-template>
+
+ <!--using modern ngfor syntax @for and @empty-->
+<!--here empty block will be shown when employees array is empty-->
+ @for(emp of employees;
+  let i =$index;let e=$even;let o=$odd;
+ let f=$first;let l=$last;let c=$count;
+ track emp.id)
+ {
+    <p>{{emp.name}}</p>
+    <p>{{emp.department}}</p>
+    <p>{{emp.id}}</p>
+ }
+ @empty {
+    <p>No Employees Found</p>
+ }
+
+ <!--using ngswitch old syntax-->
+ <!--[ngSwitch],*ngSwitchCase,*ngSwitchDefault-->
+ <div [ngSwitch]="employee.status">
+    <div *ngSwitchCase="'Active'">
+        <p> active employee -{{employee.name}}</p>
+    </div>
+  
+   <ng-container *ngSwitchCase="'Inactive'">
+ <p> inactive employee -{{employee.name}}</p>
+<button>activate</button>
+<!--ng-container is not a component and not a directive. It is a special Angular template element recognized by the Angular compiler.
+It does not render any additional DOM element but allows you to group elements together and apply structural directives like *ngIf or *ngFor without introducing extra /divs or spans in the DOM.
+-->
+   </ng-container>
+       
+  
+    <div *ngSwitchDefault>
+        <p>employee status unknown -{{employee.name}}</p>
+    </div>
+ </div>
+
+    <!--using ngswitch modern syntax-->
+ <!--   *ngSwitchCase="'Admin'"      -- String literal -
+
+*ngSwitchCase="roleName"     -- Variable --
+
+*ngIf="isLoggedIn"           -- Boolean variable --
+
+*ngIf="status === 'Active'"  -- String comparison --
+
+@case('Admin')              -- Angular 17+ --
+-->
+    @switch(employee.status)
+    {
+@case('Active')
+{
+<p> active employee -{{employee.name}}</p>
+}
+@case('Inactive')
+{
+<p> inactive employee -{{employee.name}}</p>
+}
+@default {
+    <p>employee status unknown -{{employee.name}}</p>
+}
+    }
+<!--2. <ng-template>
+What is it?
+ng-template stores HTML that Angular does NOT render immediately.
+Every structural directive uses ng-template internally.
+TemplateRef<any> is a reference to the ng-template element
+and its content.
+
+-->
+<ng-template #Study>
+    <p>Study Angular</p>
+    <p>Practice coding</p>
+</ng-template>
+<div *ngIf="!employee.isActive; else Study">
+    <p>Employee is Inactive</p>
+</div>
+
+
+
+<!--What is it?
+<ng-container> is a logical grouping element.
+It allows you to apply structural directives without creating an extra HTML element.
+ng-container itself has no properties.
+hosts only ngif,ngswithccase,ngfor,ngtemplateoutlet
+It only hosts directives.
+Example
+Without ng-container-->
+<ng-container *ngIf="!employee.isActive; else Study" >
+<p>Employee is Inactive</p>
+</ng-container>
+<!--With div am getting div tag as extra dom.-->
+<div *ngIf="employee.isActive">
+    <p>Employee is Active</p><!--prints along with div tag-->
+</div>
+<!--With ng-container 
+1.No extra wrapper
+2.can group logical elements.
+3,allows more than one structural directive
+❌ Invalid
+
+<li *ngFor="let user of users"
+    *ngIf="user.isActive">
+</li>
+
+Use ng-container.-->
+<ng-container *ngIf="employee.isActive" >
+<p>Employee is Active</p><!--this alone prints-->
+</ng-container>
+<!--With ng-container multiple directives allowed-->
+<ng-container *ngFor="let emp of employees">
+    <li *ngIf="emp.isActive">
+        {{emp.name}}
+    </li>
+</ng-container>
+
+<!--ngTemplateOutlet 
+ngTemplateOutlet can be applied to any element, but <ng-container> is preferred because it does not create an additional DOM node. This keeps the generated HTML cleaner and avoids unnecessary wrapper elements.
+Passing Data to ng-template
+let-variable and let-variable="property"
+ is used to pass data from the component to the ng-template.
+currentUser = {
+  name:'John'
+};
+-->
+<ng-template #greeting>
+    Hello Angular
+</ng-template>
+
+<ng-container *ngTemplateOutlet="greeting">
+</ng-container>
+
+<ng-template #userTemplate let-name
+let-salary="salary"
+let-status="isActive"
+let-probationEndDate="probationEndDate"
+let-dummy="dummy"
+let-currentDate="getCurrentDate"
+>
+    <h2>User Details</h2>
+    <p>Name: {{name}}</p>
+    <p>Salary: {{salary}}</p>
+    <p>Status: {{status ? 'Active' : 'Inactive'}}</p>
+    <p>Probation End Date: {{probationEndDate | date}}</p>
+    <p>Dummy: {{dummy}}</p>
+    <p>Current Date: {{currentDate}}</p>
+</ng-template>
+<ng-container
+    *ngTemplateOutlet="
+        userTemplate;
+        context:{ $implicit: employee.name, salary: employee.salary, isActive: employee.isActive, probationEndDate: employee.probationEndDate,'dummy':'dummyvalue', getCurrentDate: getCurrentDate() }">
+</ng-container>
+<!--in below example 2 ways templateoutlet used 
+both renders only   <h2>Hello Angular</h2> no extra dom  -->
+<ng-template #message>
+  <h2>Hello Angular</h2>
+</ng-template>
+<ng-container
+    [ngTemplateOutlet]="message">
+</ng-container>
+<ng-container
+    *ngTemplateOutlet="message">
+</ng-container>
+
+<!-- Example 2: Using div 
+ You write:
+-->
+<div *ngTemplateOutlet="message"></div>
+<!-- Angular transforms it internally to: 
+ Instead, Angular treats the entire <div> as the content of an internal <ng-template>.
+<ng-template [ngTemplateOutlet]="message">
+    <div></div> 
+</ng-template>
+Then ngTemplateOutlet renders the message template.
+<h2>Hello Angular</h2>
+
+No <div> appears.
+So the original <div> is never rendered to the DOM.-->
+
