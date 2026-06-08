@@ -10,9 +10,14 @@
 -->
 <!-- using custom component selector to include TestComponent
  passing data via property -->
- <input type="text" name="Parentname" [(ngModel)]="namefromParent">
- <button (click)="UpdateName()" >clickme</button>
-<app-testme [username]="namefromParent"></app-testme>
+ <input type="text" name="Parentname" [(ngModel)]="Parentname">
+ <button (click)="UpdateName()" >updateclickme</button>
+  <button (click)="addNames()" >addclickme</button>
+<app-testme [Parentlistreceived]="namelist" [Parentnamereceived]="Parentname" [parentObjectreceived]="parentObject">
+<!-- <p>content projection sample</p>
+<p>finished<span style="color:red">projecting</span></p> -->
+<p #para>trying input prop -{{Parentname}}</p>
+</app-testme>
 <p>{{title}}</p> <!-- interpolation -->
 <img [src]="srclink" alt="Custom Image" width="200" class="picture" (click)="display('Welcome to Angular!')">
 <!-- property binding and event binding   -->

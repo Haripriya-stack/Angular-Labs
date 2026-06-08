@@ -1,4 +1,22 @@
 <p>test works!</p>
+<!--using input property -->
+<h1>input property learning</h1>
+<p>{{Parentnamereceived}}</p>
+<p>
+{{parentObjectreceived | json}}
+</p>
+<div *ngFor="let i of Parentlistreceived">
+<p>
+ {{i}}
+</p>
+</div>
+<!--content projection-->
+<h1>content projection illustrate aftercontent..,afterview..
+ hooks</h1>
+<div #wrapper>
+<ng-content></ng-content>
+</div>
+
 <!--using normal css class-->
 <h1>using normal css class</h1>
 <div class="container">

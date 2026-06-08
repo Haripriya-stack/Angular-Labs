@@ -1,4 +1,4 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { AfterContentChecked, AfterContentInit, AfterViewChecked, AfterViewInit, Component, DoCheck, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import {TestComponent} from './test/test.component';
 import {FormsModule} from '@angular/forms';//ngmodel
 import {CommonModule} from '@angular/common';//ngforif,switch
@@ -15,7 +15,7 @@ import { empInterface } from './empInterface';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements OnInit,OnChanges
+export class AppComponent implements OnInit,OnChanges,DoCheck,AfterContentInit,AfterContentChecked,AfterViewInit,AfterViewChecked
 {
   title = 'myangproject';
   srclink : string ='./assets/24962557.jpg';
@@ -23,24 +23,49 @@ export class AppComponent implements OnInit,OnChanges
  numberInput: any = 0;
  //BELOW PROPERTY is to send value to child compoent
  //test component input prop receves this value via tag
- namefromParent:string='hi naresh sasi come';
-
+ Parentname:string='hi nareshsasi';
+parentObject={city:'chennai'};
+ 
  UpdateName(): void {
   console.log("updatebtn clicked");
-  this.namefromParent='Hi charan naresh sasi deena';
+  this.Parentname='Hi deenasasiparent';
+  this.parentObject.city='Bangalore';
  }
-
+//to try ngdocheck
+ namelist :string[]=['john'];
+ addNames() :void{
+    console.log("btn clicked");
+  //this.namelist.push("david");
+this.namelist=[...this.namelist, 'David'];
+ }
 
  constructor() {
-   console.log("AppComponent constructor called"+new Date().toDateString());
+   console.log("AppComponent constructor called"+new Date().toLocaleTimeString());
  }
  ngOnChanges(changes: SimpleChanges): void {
-    console.log("AppComponent ngOnChanges called"+new Date().toDateString());
+    console.log("AppComponent ngOnChanges called"+new Date().toLocaleTimeString());
    console.log(changes);
  
  }
  ngOnInit(): void {
-    console.log("AppComponent ngOnInit called"+new Date().toDateString());
+    console.log("AppComponent ngOnInit called"+new Date().toLocaleTimeString());
+ }
+
+ ngDoCheck(): void {
+    console.log("AppComponent ngDoCheck called"+new Date().toLocaleTimeString());
+ }
+ ngAfterContentInit(): void {
+    console.log("AppComponent ngAfterContentInit called"+new Date().toLocaleTimeString());
+ }
+ ngAfterContentChecked(): void {
+   console.log("AppComponent ngAfterContentChecked called"+new Date().toLocaleTimeString());
+ }
+
+ ngAfterViewInit(): void {
+   console.log("AppComponent ngAfterViewInit called"+new Date().toLocaleTimeString());
+ }
+ ngAfterViewChecked(): void {
+   console.log("AppComponent ngAfterViewChecked called"+new Date().toLocaleTimeString());
  }
 //getter method to calculate value based on numberInput
 //example is a property, not a normal function.
